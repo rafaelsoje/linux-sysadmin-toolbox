@@ -131,6 +131,14 @@ Notificador de incidentes de segurança com extração forense:
 * Analisa o journal do `sshd` para listar quais nomes de usuários foram tentados no ataque de força bruta.
 * Emite alertas imediatos no Telegram com nível de severidade e tempo de banimento.
 
+#### 🌐 Regras de Borda do Cloudflare WAF (`cloudflare-waf-rules.json`)
+Definições exportadas das regras personalizadas de proteção em borda (Cloudflare WAF Custom Rules):
+1. **`Block by IP Lists: malicious_ips`**: Bloqueio ativo alimentado dinamicamente pelo script `update-abuseipdb-cloudflare.py`.
+2. **`Bots e Crawlers de Ferramentas de Pentest / Scanner`**: Bloqueio de User-Agents maliciosos (Nikto, Nmap, SQLmap, Acunetix, WPScan, Dirbuster, Scrapy, etc.).
+3. **`Acesso a Arquivos e Diretórios Críticos`**: Bloqueio perimetral de requisições a `.env`, `.git`, `.yaml`, `.sql`, backups (`.bak`, `.tar.gz`), `/actuator`, `phpmyadmin` e painéis administrativos.
+4. **`Transversal Path | XSS | SQLi | Wrappers SSRF | Command Injection`**: Interceptação em camada de borda contra Path Traversal (`../`, URL encoded `%2e%2e%2f`), SQL Injection (`union select`, `sleep()`), XSS (`<script>`), PHP stream wrappers (`php://`, `gopher://`) e Command Injection (`;id`, `;cat`, `;bash`).
+
+
 #### 🔍 HIDS (Host-Based Intrusion Detection System - `security-hardening/hids/`)
 * **`monitorar-portas.sh`**: Monitoramento contínuo das portas em escuta (`ss -tunlp`). Emite alerta imediato caso portas críticas (21, 23, 25, 8080) sejam abertas ou portas vitais (22, 443) fiquem indisponíveis.
 * **`monitorar-pacotes.sh`**: Auditoria do gerenciador de pacotes (`dpkg`), alertando sobre instalação ou remoção inadvertida de softwares e binários.
