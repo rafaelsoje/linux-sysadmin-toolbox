@@ -1,0 +1,12 @@
+[Unit]
+Description=Timer para execucao diaria do Backup Hetzner
+Requires=backup-hetzner.service
+
+[Timer]
+Unit=backup-hetzner.service
+# Executa todos os dias às 03:00 da madrugada
+OnCalendar=*-*-* 03:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

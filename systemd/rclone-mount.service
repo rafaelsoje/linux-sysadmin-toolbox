@@ -1,0 +1,22 @@
+[Unit]
+Description=Montagem de Armazenamento Remoto via Rclone FUSE
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+# Ajuste o usuário e caminhos conforme o ambiente
+User=rafael
+Group=rafael
+ExecStart=/usr/bin/rclone mount remote_name:/ /caminho/ponto/de/montagem \
+    --vfs-cache-mode writes \
+    --vfs-cache-max-age 24h \
+    --buffer-size 64M \
+    --dir-cache-time 72h \
+    --allow-other
+ExecStop=/bin/fusermount -u /caminho/ponto/de/montagem
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,14 @@
+[Unit]
+Description=Rotina Diaria de Backup GFS para Hetzner Storage Box
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/local/bin/backup-hetzner-gfs.sh
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
