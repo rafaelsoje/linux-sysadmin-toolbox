@@ -1,0 +1,15 @@
+[Unit]
+Description=Sincronizacao Diaria AbuseIPDB para Cloudflare WAF IP Lists
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/opt/security-hardening
+ExecStart=/usr/bin/python3 /opt/security-hardening/update-abuseipdb-cloudflare.py
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

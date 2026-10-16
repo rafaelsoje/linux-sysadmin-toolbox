@@ -1,0 +1,12 @@
+[Unit]
+Description=Timer para execucao diaria da sincronizacao AbuseIPDB -> Cloudflare WAF
+Requires=abuseipdb-sync.service
+
+[Timer]
+Unit=abuseipdb-sync.service
+# Executa diariamente às 04:00 da madrugada
+OnCalendar=*-*-* 04:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
