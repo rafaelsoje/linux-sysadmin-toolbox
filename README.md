@@ -3,13 +3,12 @@
 [![Bash](https://img.shields.io/badge/Language-Bash%20%2F%20POSIX-4EAA25?logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
 [![Python](https://img.shields.io/badge/Language-Python%203-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Linux](https://img.shields.io/badge/Platform-Linux%20%2F%20POSIX-FCC624?logo=linux&logoColor=black)](https://kernel.org/)
-[![LPIC-1](https://img.shields.io/badge/Certified-LPIC--1-blue)](https://www.lpi.org/our-certifications/lpic-1-overview/)
 [![Security: Hardened](https://img.shields.io/badge/Security-HIDS%20%26%20WAF%20Hardened-red)](#5-segurança-hardening--hids-security-hardening)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Conjunto modular de ferramentas de produção, scripts de automação, rotinas de contingência GFS, sistemas de detecção de intrusão baseados em host (HIDS) e automação de WAF/Fail2ban para administração de servidores Linux e VPS em alta disponibilidade.
 
-Desenvolvido por **[Rafael Soje](https://rafaelsoje.com)** — Administrador de Sistemas Linux (LPIC-1) e Especialista em Segurança da Informação & DevSecOps.
+Desenvolvido por **[Rafael Soje](https://rafaelsoje.com)** — Administrador de Sistemas Linux e Especialista em Segurança da Informação & DevSecOps.
 
 ---
 
@@ -176,5 +175,4 @@ sudo systemctl enable --now abuseipdb-sync.timer
 **Rafael Soje**
 * **Website Oficial**: [rafaelsoje.com](https://rafaelsoje.com)
 * **GitHub**: [@rafaelsoje](https://github.com/rafaelsoje)
-* **Certificação**: LPIC-1 (Linux Professional Institute)
 * **Especialidade**: Linux System Administration, DevSecOps, Segurança da Informação e Arquitetura Web.
