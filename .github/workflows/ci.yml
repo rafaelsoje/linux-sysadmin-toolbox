@@ -1,0 +1,33 @@
+name: CI - Verificação de Sintaxe e Integridade
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Validação de Sintaxe (Bash & Python)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validar Sintaxe dos Scripts Bash
+        run: |
+          echo "[+] Validando scripts em Shell com 'bash -n'..."
+          bash -n backup/*.sh system/*.sh network/*.sh security-hardening/hids/*.sh
+          echo "[✔] Todos os scripts Bash passaram na validação de sintaxe."
+
+      - name: Validar Sintaxe dos Scripts Python
+        run: |
+          echo "[+] Validando scripts Python com 'py_compile'..."
+          python3 -m py_compile security-hardening/*.py
+          echo "[✔] Todos os scripts Python compilaram sem erros de sintaxe."

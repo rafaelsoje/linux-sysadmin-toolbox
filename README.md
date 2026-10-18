@@ -1,5 +1,7 @@
 # Linux Sysadmin & DevSecOps Toolbox 🐧🛡️
 
+[![CI](https://github.com/rafaelsoje/linux-sysadmin-toolbox/actions/workflows/ci.yml/badge.svg)](https://github.com/rafaelsoje/linux-sysadmin-toolbox/actions)
+[![Release](https://img.shields.io/badge/Release-v1.0.0-blue.svg)](https://github.com/rafaelsoje/linux-sysadmin-toolbox/releases/latest)
 [![Bash](https://img.shields.io/badge/Language-Bash%20%2F%20POSIX-4EAA25?logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
 [![Python](https://img.shields.io/badge/Language-Python%203-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Linux](https://img.shields.io/badge/Platform-Linux%20%2F%20POSIX-FCC624?logo=linux&logoColor=black)](https://kernel.org/)
