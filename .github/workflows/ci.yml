@@ -23,7 +23,7 @@ jobs:
       - name: Validar Sintaxe dos Scripts Bash
         run: |
           echo "[+] Validando scripts em Shell com 'bash -n'..."
-          bash -n backup/*.sh system/*.sh network/*.sh security-hardening/hids/*.sh
+          bash -n backup/*.sh system/*.sh network/*.sh security-hardening/*.sh security-hardening/hids/*.sh
           echo "[✔] Todos os scripts Bash passaram na validação de sintaxe."
 
       - name: Validar Sintaxe dos Scripts Python
@@ -31,3 +31,4 @@ jobs:
           echo "[+] Validando scripts Python com 'py_compile'..."
           python3 -m py_compile security-hardening/*.py
           echo "[✔] Todos os scripts Python compilaram sem erros de sintaxe."
+

@@ -28,3 +28,4 @@
     "notes": "Defesa em profundidade contra ataques web comuns: Path Traversal (inclusive variantes URL encoded), SQL Injection, XSS, PHP Stream Wrappers (SSRF) e Command Injection."
   }
 ]
+

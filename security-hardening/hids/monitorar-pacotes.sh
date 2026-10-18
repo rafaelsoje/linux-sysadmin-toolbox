@@ -67,3 +67,4 @@ fi
 
 mv "${PACOTES_ATUAL}" "${PACOTES_ANTIGO}"
 exit 0
+

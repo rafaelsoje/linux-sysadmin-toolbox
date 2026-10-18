@@ -24,12 +24,16 @@ linux-sysadmin-toolbox/
 │   └── rclone-dedupe.sh                      # Desduplicação automatizada em remotes Rclone
 ├── system/
 │   ├── create-swap.sh                        # Alocação de Swap com permissões 0600 e persistência no fstab
+│   ├── docker-cleanup.sh                     # Manutenção e higienização do Docker com truncamento de logs
 │   ├── sysinfo.sh                            # Diagnóstico consolidado de hardware, kernel, carga e rede
 │   └── userinfo.sh                           # Auditoria de contas locais, diretório home, UID/GID e lastlog
 ├── network/
 │   └── tor-proxy-manager.sh                  # Gerenciador CLI de proxy SOCKS5 (Tor local)
 ├── security-hardening/
 │   ├── config.example.env                    # Template seguro para credenciais de API e alertas
+│   ├── setup-hids.sh                         # Instalador e inicializador automatizado da suíte HIDS
+│   ├── nginx-hardening.conf                  # Snippet de cabeçalhos e diretivas defensivas para Nginx
+│   ├── cloudflare-waf-rules.json             # Regras customizadas exportadas do Cloudflare WAF
 │   ├── update-abuseipdb-cloudflare.py        # Sincronizador diário de reputação AbuseIPDB -> Cloudflare WAF Lists
 │   ├── f2b-nginx-cloudflare-block.py         # Bloqueio em camada dupla (Nginx RealIP map + Cloudflare Edge WAF)
 │   ├── f2b-telegram-notify.py                # Alertas forenses via Telegram com análise de probes e força bruta SSH
@@ -89,6 +93,20 @@ Criação automatizada de Swap File no Linux:
 sudo ./system/create-swap.sh 4G /swapfile
 ```
 
+#### 🐳 `docker-cleanup.sh`
+Manutenção e liberação periódica de espaço em disco no Docker:
+* Expura containers parados, redes órfãs e imagens sem uso (*dangling*).
+* Limpa cache de compilação (*BuildKit cache*).
+* Trunca logs excessivos de containers (`*-json.log`) sem derrubar os serviços ativos.
+
+```bash
+# Execução padrão (limpeza com truncamento de logs > 50MB):
+sudo ./system/docker-cleanup.sh
+
+# Apenas verificar espaço recuperável sem alterar nada:
+./system/docker-cleanup.sh --dry-run
+```
+
 #### 📊 `sysinfo.sh`
 Relatório instantâneo de diagnóstico do servidor: Kernel, arquitetura, Uptime, Load Average, Cores da CPU, consumo consolidado de RAM/Swap, particionamento e interfaces de rede.
 
@@ -139,6 +157,23 @@ Definições exportadas das regras personalizadas de proteção em borda (Cloudf
 3. **`Acesso a Arquivos e Diretórios Críticos`**: Bloqueio perimetral de requisições a `.env`, `.git`, `.yaml`, `.sql`, backups (`.bak`, `.tar.gz`), `/actuator`, `phpmyadmin` e painéis administrativos.
 4. **`Transversal Path | XSS | SQLi | Wrappers SSRF | Command Injection`**: Interceptação em camada de borda contra Path Traversal (`../`, URL encoded `%2e%2e%2f`), SQL Injection (`union select`, `sleep()`), XSS (`<script>`), PHP stream wrappers (`php://`, `gopher://`) e Command Injection (`;id`, `;cat`, `;bash`).
 
+
+#### 🛡️ `nginx-hardening.conf`
+Snippet modular para inclusão em servidores Nginx de produção:
+* Ativação de cabeçalhos de segurança: HSTS (`max-age=31536000`), X-Frame-Options, X-Content-Type-Options e Permissions-Policy.
+* Ocultação de versão do Nginx (`server_tokens off`).
+* Bloqueio silencioso (HTTP 444) contra download de arquivos ocultos (`.env`, `.git`) e backups (`.sql`, `.bak`, `.tar.gz`).
+* Buffers dimensionados para mitigação de ataques de exaustão e Slowloris.
+
+#### ⚙️ `setup-hids.sh`
+Instalador interativo da suíte HIDS:
+* Cria estrutura de diretórios e arquivos de configuração.
+* Gera baselines criptográficos iniciais do host em `/home/$USER/.hids/logs/`.
+* Exibe instruções prontas para agendamento no `cron` ou `systemd`.
+
+```bash
+./security-hardening/setup-hids.sh
+```
 
 #### 🔍 HIDS (Host-Based Intrusion Detection System - `security-hardening/hids/`)
 * **`monitorar-portas.sh`**: Monitoramento contínuo das portas em escuta (`ss -tunlp`). Emite alerta imediato caso portas críticas (21, 23, 25, 8080) sejam abertas ou portas vitais (22, 443) fiquem indisponíveis.

@@ -58,3 +58,4 @@ fi
 
 mv "${LOG_ATUAL}" "${LOG_ANTERIOR}"
 exit 0
+

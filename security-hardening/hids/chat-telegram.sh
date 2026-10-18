@@ -95,3 +95,4 @@ else
         -d "chat_id=${CHAT_ID}" \
         --data-urlencode "text=$(printf "%b" "$MESSAGE")" >/dev/null || true
 fi
+

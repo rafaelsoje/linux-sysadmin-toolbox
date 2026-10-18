@@ -58,3 +58,4 @@ fi
 
 mv "${HASH_ATUAL}" "${HASH_ANTIGO}"
 exit 0
+
