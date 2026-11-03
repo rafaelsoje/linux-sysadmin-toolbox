@@ -37,6 +37,7 @@ linux-sysadmin-toolbox/
 ├── security-hardening/
 │   ├── config.example.env                    # Template seguro para credenciais de API e alertas
 │   ├── setup-hids.sh                         # Instalador e inicializador automatizado da suíte HIDS
+│   ├── ssh-hardening-check.sh                # Auditor de conformidade e hardening para OpenSSH (sshd_config)
 │   ├── nginx-hardening.conf                  # Snippet de cabeçalhos e diretivas defensivas para Nginx
 │   ├── cloudflare-waf-rules.json             # Regras customizadas exportadas do Cloudflare WAF
 │   ├── update-abuseipdb-cloudflare.py        # Sincronizador diário de reputação AbuseIPDB -> Cloudflare WAF Lists
@@ -178,6 +179,31 @@ Instalador interativo da suíte HIDS:
 
 ```bash
 ./security-hardening/setup-hids.sh
+```
+
+#### `ssh-hardening-check.sh`
+Auditor defensivo de conformidade e hardening para o servidor **OpenSSH** (`sshd_config`), baseado em recomendações do CIS Benchmarks e NIST SP 800-128:
+* **Inspeção Inteligente**: Opera via engine nativa do OpenSSH (`sshd -T`) quando executado com privilégios adequados ou via parsing recursivo de arquivos e diretivas `Include` (`sshd_config.d/*.conf`).
+* **Diretivas Auditadas**:
+  * Autenticação de Root (`PermitRootLogin no`)
+  * Autenticação por Chaves vs Senhas (`PasswordAuthentication no`, `PubkeyAuthentication yes`)
+  * Rejeição de Senhas Vazias (`PermitEmptyPasswords no`)
+  * Limite de Tentativas contra Força Bruta (`MaxAuthTries 3`)
+  * Desativação de Repasse Gráfico e Sockets (`X11Forwarding no`, `AllowAgentForwarding no`)
+  * Prevenção de Sessões Zumbis por Inatividade (`ClientAliveInterval`, `ClientAliveCountMax`)
+  * Bloqueio de Métodos Legados (`HostbasedAuthentication no`, `IgnoreRhosts yes`)
+  * Verificação de Cifras e Algoritmos Obsoletos (3DES, Arcfour, Blowfish, MD5, DH-Group1)
+* **Diagnóstico e Relatório**:
+  * Atribuição de pontuação técnica (0 a 100) e nota de conformidade (A+, A, B, C, D, F).
+  * Lista priorizada de ações recomendadas de remediação.
+  * Suporte a teste de arquivos de configuração arbitrários (`-c`) e modo sem cores (`--no-color`).
+
+```bash
+# Executar auditoria na configuração padrão do sistema:
+./security-hardening/ssh-hardening-check.sh
+
+# Auditar arquivo de configuração customizado ou backup:
+./security-hardening/ssh-hardening-check.sh -c /etc/ssh/sshd_config
 ```
 
 #### HIDS (Host-Based Intrusion Detection System - `security-hardening/hids/`)
