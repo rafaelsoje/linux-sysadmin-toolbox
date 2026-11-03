@@ -6,9 +6,14 @@
 [![Python](https://img.shields.io/badge/Language-Python%203-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Linux](https://img.shields.io/badge/Platform-Linux%20%2F%20POSIX-FCC624?logo=linux&logoColor=black)](https://kernel.org/)
 [![Security: Hardened](https://img.shields.io/badge/Security-HIDS%20%26%20WAF%20Hardened-red)](#4-seguranca-hardening--hids-security-hardening)
+[![XERJ Corpus Hub](https://img.shields.io/badge/XERJ_Corpus_Hub-Selected_Reference-7c3aed?logo=rust&logoColor=white)](https://github.com/xerj-org/xerj)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Conjunto modular de ferramentas de produção, scripts de automação, rotinas de contingência GFS, sistemas de detecção de intrusão baseados em host (HIDS) e automação de WAF/Fail2ban para administração de servidores Linux e VPS em alta disponibilidade.
+
+> [!NOTE]
+> **Reconhecimento da Comunidade & Ecossistema de IA:**  
+> Este repositório foi selecionado e integrado ao **Corpus Hub** oficial do [XERJ](https://github.com/xerj-org/xerj) (+18.000 estrelas no GitHub) como implementação de referência de código aberto em automação com Shell/Python, hardening de Nginx, manutenção de Docker e detecção de intrusão baseada em host (HIDS) para agentes autônomos de programação.
 
 Desenvolvido por **[Rafael Soje](https://rafaelsoje.com)** — Administrador de Sistemas Linux e Especialista em Segurança da Informação & DevSecOps.
 
