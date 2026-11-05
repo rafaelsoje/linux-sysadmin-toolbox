@@ -28,6 +28,7 @@ linux-sysadmin-toolbox/
 ├── backup/
 │   ├── backup-hetzner-gfs.sh                 # GFS backup routine with SHA-256 integrity check and Rclone sync
 │   ├── backup-mysql.sh                       # Safe MySQL/MariaDB dump with gzip pipeline and local retention
+│   ├── backup-postgres.sh                    # Safe PostgreSQL/pg_dumpall dump with gzip pipeline and local retention
 │   └── rclone-dedupe.sh                      # Automated deduplication across Rclone remotes
 ├── system/
 │   ├── create-swap.sh                        # Swap allocation with 0600 permissions and fstab persistence
@@ -87,6 +88,20 @@ Consistent MySQL/MariaDB database dump without code-exposed credentials:
 * Secure authentication via `~/.my.cnf` (`0600` permissions) or environment variables (`MYSQL_USER`, `MYSQL_PWD`, `MYSQL_HOST`).
 * High-compression `gzip -9` stream pipeline with zero temporary uncompressed disk footprint.
 * Automated local dump rotation and cleanup for archives older than *N* days.
+
+#### `backup-postgres.sh`
+Consistent PostgreSQL database or full cluster dump (`pg_dumpall`) without code-exposed credentials:
+* Secure authentication via `~/.pgpass` (`0600` permissions) or environment variables (`PGDATABASE`, `PGUSER`, `PGHOST`, `PGPORT`).
+* Real-time `gzip -9` compression pipeline with zero uncompressed temporary disk overhead.
+* Automated local dump rotation and cleanup for archives older than *N* days.
+
+```bash
+# Specific database backup:
+PGDATABASE="mydatabase" ./backup/backup-postgres.sh
+
+# Full cluster backup (pg_dumpall):
+./backup/backup-postgres.sh
+```
 
 ---
 
