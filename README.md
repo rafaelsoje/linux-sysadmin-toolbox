@@ -1,5 +1,7 @@
 # Linux Sysadmin & DevSecOps Toolbox
 
+[ Português ] • [ [English Version](README.en.md) ]
+
 [![CI](https://github.com/rafaelsoje/linux-sysadmin-toolbox/actions/workflows/ci.yml/badge.svg)](https://github.com/rafaelsoje/linux-sysadmin-toolbox/actions)
 [![Release](https://img.shields.io/badge/Release-v1.0.0-blue.svg)](https://github.com/rafaelsoje/linux-sysadmin-toolbox/releases/latest)
 [![Bash](https://img.shields.io/badge/Language-Bash%20%2F%20POSIX-4EAA25?logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
@@ -56,7 +58,8 @@ linux-sysadmin-toolbox/
 │   ├── abuseipdb-sync.timer                  # Agendamento diário de reputação (04:00)
 │   └── rclone-mount.service                  # Unit para montagem de storage remoto via FUSE
 ├── LICENSE                                   # Licença MIT
-└── README.md                                 # Documentação técnica completa
+├── README.md                                 # Documentação técnica em português
+└── README.en.md                              # Documentação técnica em inglês
 ```
 
 ---
