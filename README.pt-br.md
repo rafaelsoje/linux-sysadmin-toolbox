@@ -40,6 +40,7 @@ linux-sysadmin-toolbox/
 ├── security-hardening/
 │   ├── config.example.env                    # Template seguro para credenciais de API e alertas
 │   ├── setup-hids.sh                         # Instalador e inicializador automatizado da suíte HIDS
+│   ├── kernel-sysctl-check.sh                # Auditor de parâmetros e hardening do kernel Linux (sysctl)
 │   ├── ssh-hardening-check.sh                # Auditor de conformidade e hardening para OpenSSH (sshd_config)
 │   ├── nginx-hardening.conf                  # Snippet de cabeçalhos e diretivas defensivas para Nginx
 │   ├── cloudflare-waf-rules.json             # Regras customizadas exportadas do Cloudflare WAF
@@ -223,6 +224,25 @@ Auditor defensivo de conformidade e hardening para o servidor **OpenSSH** (`sshd
 
 # Auditar arquivo de configuração customizado ou backup:
 ./security-hardening/ssh-hardening-check.sh -c /etc/ssh/sshd_config
+```
+
+#### `kernel-sysctl-check.sh`
+Auditor defensivo de parâmetros do kernel Linux (`sysctl` / `/proc/sys/`), baseado nos benchmarks do CIS (Center for Internet Security), NIST SP 800-128 e CISOfy Lynis:
+* **Domínios Auditados**:
+  * **Defesa de Rede IPv4**: Filtro de caminho reverso estrito (`rp_filter` anti-spoofing), mitigação de SYN Flood (`tcp_syncookies`), bloqueio de ICMP Redirects, rejeição de Source Routing, bloqueio de ping em broadcast e log de pacotes marcianos.
+  * **Defesa de Rede IPv6**: Bloqueio de ICMPv6 Redirects e desativação de Source Route.
+  * **Sistema de Arquivos & Proteção contra Exploits**: Mitigações de race conditions de hardlinks e symlinks em `/tmp` (`protected_hardlinks`, `protected_symlinks`), restrições de FIFOs e prevenção contra vazamento de memória em core dumps (`suid_dumpable = 0`).
+  * **Integridade do Kernel & Memória**: ASLR completo (`randomize_va_space = 2`), ocultação de ponteiros de kernel em `/proc/kallsyms` (`kptr_restrict = 2`), restrição de logs do `dmesg` (`dmesg_restrict = 1`) e bloqueio de eBPF por usuários sem privilégio.
+* **Automação de Configuração**:
+  * Gera arquivo pronto para implantação em `/etc/sysctl.d/99-sysctl-hardening.conf` (`--generate-conf`).
+  * Aplicação direta em tempo de execução via `sysctl -w` (`--apply`, requer root).
+
+```bash
+# Executar auditoria de parâmetros do kernel:
+./security-hardening/kernel-sysctl-check.sh
+
+# Gerar arquivo de hardening pronto para implantação:
+./security-hardening/kernel-sysctl-check.sh --generate-conf /etc/sysctl.d/99-sysctl-hardening.conf
 ```
 
 #### HIDS (Host-Based Intrusion Detection System - `security-hardening/hids/`)

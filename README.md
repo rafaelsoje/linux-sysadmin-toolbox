@@ -40,6 +40,7 @@ linux-sysadmin-toolbox/
 ├── security-hardening/
 │   ├── config.example.env                    # Secure template for API credentials and alerts
 │   ├── setup-hids.sh                         # Automated installer and baseline initializer for HIDS suite
+│   ├── kernel-sysctl-check.sh                # Linux kernel sysctl hardening & compliance auditor (CIS / Lynis)
 │   ├── ssh-hardening-check.sh                # OpenSSH server compliance & hardening auditor (sshd_config)
 │   ├── nginx-hardening.conf                  # Production-grade defensive security headers & directives
 │   ├── cloudflare-waf-rules.json             # Custom edge security rules exported from Cloudflare WAF
@@ -59,7 +60,6 @@ linux-sysadmin-toolbox/
 │   ├── abuseipdb-sync.timer                  # Daily reputation sync timer (04:00)
 │   └── rclone-mount.service                  # Systemd unit for remote cloud storage mount with VFS cache
 ├── LICENSE                                   # MIT License
-├── README.md                                 # Documentation in Portuguese
 ├── README.md                                 # Technical documentation in English
 └── README.pt-br.md                           # Documentação técnica em português
 ```
@@ -222,6 +222,25 @@ Compliance and hardening auditor for **OpenSSH Server** (`sshd_config`), based o
 
 # Audit custom configuration file or backup:
 ./security-hardening/ssh-hardening-check.sh -c /etc/ssh/sshd_config
+```
+
+#### `kernel-sysctl-check.sh`
+Linux kernel parameter security and defensive hardening auditor (`sysctl` / `/proc/sys/`), based on CIS Benchmarks, NIST SP 800-128, and CISOfy Lynis:
+* **Audited Domains**:
+  * **IPv4 Network Defense**: Strict Reverse Path Filtering (`rp_filter` anti-spoofing), SYN Flood protection (`tcp_syncookies`), ICMP redirect blocking, Source Routing rejection, broadcast ping ignores, and Martian packet logging.
+  * **IPv6 Network Defense**: ICMPv6 redirect blocking and Source Route rejection.
+  * **Filesystem & Link Exploit Protection**: Hardlink/symlink race condition mitigations (`protected_hardlinks`, `protected_symlinks`), FIFO restrictions, and core dump memory leak prevention (`suid_dumpable = 0`).
+  * **Kernel Integrity & Memory Protection**: Full ASLR (`randomize_va_space = 2`), kernel pointer restriction in `/proc/kallsyms` (`kptr_restrict = 2`), dmesg logging restriction (`dmesg_restrict = 1`), and unprivileged eBPF disabling.
+* **Automation**:
+  * Generates production-ready `99-sysctl-hardening.conf` drop-in files for `/etc/sysctl.d/` (`--generate-conf`).
+  * Supports runtime parameter enforcement (`--apply`, requires root).
+
+```bash
+# Run kernel sysctl security audit:
+./security-hardening/kernel-sysctl-check.sh
+
+# Generate ready-to-deploy hardening configuration:
+./security-hardening/kernel-sysctl-check.sh --generate-conf /etc/sysctl.d/99-sysctl-hardening.conf
 ```
 
 #### HIDS (Host-Based Intrusion Detection System - `security-hardening/hids/`)
