@@ -8,14 +8,14 @@
 [![Python](https://img.shields.io/badge/Language-Python%203-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Linux](https://img.shields.io/badge/Platform-Linux%20%2F%20POSIX-FCC624?logo=linux&logoColor=black)](https://kernel.org/)
 [![Security: Hardened](https://img.shields.io/badge/Security-HIDS%20%26%20WAF%20Hardened-red)](#4-security-hardening--hids-security-hardening)
-[![XERJ Corpus Hub](https://img.shields.io/badge/XERJ_Corpus_Hub-Selected_Reference-7c3aed?logo=rust&logoColor=white)](https://github.com/xerj-org/xerj)
+[![XERJ Corpus Hub Contributor](https://hub.xerj.org/contributors/rafaelsoje/badge.svg)](https://hub.xerj.org/contributors/rafaelsoje)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Modular suite of production tools, automation scripts, GFS contingency routines, host-based intrusion detection systems (HIDS), and WAF/Fail2ban automations for Linux servers and high-availability VPS administration.
 
 > [!NOTE]
 > **Community & AI Ecosystem Recognition:**  
-> This repository was selected and integrated into the official **Corpus Hub** of [XERJ](https://github.com/xerj-org/xerj) (+18,000 GitHub stars) as an open-source reference implementation for Shell/Python automation, Nginx hardening, Docker hygiene, and host-based intrusion detection (HIDS) for autonomous AI programming agents.
+> This repository was selected and integrated into the official [XERJ Corpus Hub](https://hub.xerj.org/contributors/rafaelsoje) (+18,000 GitHub stars) as an open-source reference implementation for Shell/Python automation, Nginx hardening, Docker hygiene, and host-based intrusion detection (HIDS) for autonomous AI programming agents. View the official contributor profile at [hub.xerj.org/contributors/rafaelsoje](https://hub.xerj.org/contributors/rafaelsoje).
 
 Developed by **[Rafael Soje](https://rafaelsoje.com)** — Linux Systems Engineer and Information Security & DevSecOps Specialist.
 
