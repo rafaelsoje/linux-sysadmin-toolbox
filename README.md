@@ -1,82 +1,83 @@
 # Linux Sysadmin & DevSecOps Toolbox
 
-[ Português ] • [ [English Version](README.en.md) ]
+[ English ] • [ [Versão em Português](README.pt-br.md) ]
 
 [![CI](https://github.com/rafaelsoje/linux-sysadmin-toolbox/actions/workflows/ci.yml/badge.svg)](https://github.com/rafaelsoje/linux-sysadmin-toolbox/actions)
 [![Release](https://img.shields.io/badge/Release-v1.0.0-blue.svg)](https://github.com/rafaelsoje/linux-sysadmin-toolbox/releases/latest)
 [![Bash](https://img.shields.io/badge/Language-Bash%20%2F%20POSIX-4EAA25?logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
 [![Python](https://img.shields.io/badge/Language-Python%203-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Linux](https://img.shields.io/badge/Platform-Linux%20%2F%20POSIX-FCC624?logo=linux&logoColor=black)](https://kernel.org/)
-[![Security: Hardened](https://img.shields.io/badge/Security-HIDS%20%26%20WAF%20Hardened-red)](#4-seguranca-hardening--hids-security-hardening)
+[![Security: Hardened](https://img.shields.io/badge/Security-HIDS%20%26%20WAF%20Hardened-red)](#4-security-hardening--hids-security-hardening)
 [![XERJ Corpus Hub Contributor](https://hub.xerj.org/contributors/rafaelsoje/badge.svg)](https://hub.xerj.org/contributors/rafaelsoje)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Conjunto modular de ferramentas de produção, scripts de automação, rotinas de contingência GFS, sistemas de detecção de intrusão baseados em host (HIDS) e automação de WAF/Fail2ban para administração de servidores Linux e VPS em alta disponibilidade.
+Modular suite of production tools, automation scripts, GFS contingency routines, host-based intrusion detection systems (HIDS), and WAF/Fail2ban automations for Linux servers and high-availability VPS administration.
 
 > [!NOTE]
-> **Reconhecimento da Comunidade & Ecossistema de IA:**  
-> Este repositório foi selecionado e integrado ao [XERJ Corpus Hub](https://hub.xerj.org/contributors/rafaelsoje) oficial (+18.000 estrelas no GitHub) como implementação de referência de código aberto em automação com Shell/Python, hardening de Nginx, manutenção de Docker e detecção de intrusão baseada em host (HIDS) para agentes autônomos de programação. Consulte o perfil de contribuidor oficial em [hub.xerj.org/contributors/rafaelsoje](https://hub.xerj.org/contributors/rafaelsoje).
+> **Community & AI Ecosystem Recognition:**  
+> This repository was selected and integrated into the official [XERJ Corpus Hub](https://hub.xerj.org/contributors/rafaelsoje) (+18,000 GitHub stars) as an open-source reference implementation for Shell/Python automation, Nginx hardening, Docker hygiene, and host-based intrusion detection (HIDS) for autonomous AI programming agents. View the official contributor profile at [hub.xerj.org/contributors/rafaelsoje](https://hub.xerj.org/contributors/rafaelsoje).
 
-Desenvolvido por **[Rafael Soje](https://rafaelsoje.com)** — Administrador de Sistemas Linux e Especialista em Segurança da Informação & DevSecOps.
+Developed by **[Rafael Soje](https://rafaelsoje.com)** — Linux Systems Engineer and Information Security & DevSecOps Specialist.
 
 ---
 
-## Estrutura do Repositório
+## Repository Structure
 
 ```text
 linux-sysadmin-toolbox/
 ├── backup/
-│   ├── backup-hetzner-gfs.sh                 # Rotina de backup GFS com hash SHA-256 e sincronização Rclone
-│   ├── backup-mysql.sh                       # Dump seguro de MySQL/MariaDB com gzip e retenção local
-│   ├── backup-postgres.sh                    # Dump seguro de PostgreSQL/pg_dumpall com gzip e retenção local
-│   └── rclone-dedupe.sh                      # Desduplicação automatizada em remotes Rclone
+│   ├── backup-hetzner-gfs.sh                 # GFS backup routine with SHA-256 integrity check and Rclone sync
+│   ├── backup-mysql.sh                       # Safe MySQL/MariaDB dump with gzip pipeline and local retention
+│   ├── backup-postgres.sh                    # Safe PostgreSQL/pg_dumpall dump with gzip pipeline and local retention
+│   └── rclone-dedupe.sh                      # Automated deduplication across Rclone remotes
 ├── system/
-│   ├── create-swap.sh                        # Alocação de Swap com permissões 0600 e persistência no fstab
-│   ├── docker-cleanup.sh                     # Manutenção e higienização do Docker com truncamento de logs
-│   ├── sysinfo.sh                            # Diagnóstico consolidado de hardware, kernel, carga e rede
-│   └── userinfo.sh                           # Auditoria de contas locais, diretório home, UID/GID e lastlog
+│   ├── create-swap.sh                        # Swap allocation with 0600 permissions and fstab persistence
+│   ├── docker-cleanup.sh                     # Docker hygiene with container log truncation (>50MB)
+│   ├── sysinfo.sh                            # Consolidated hardware, kernel, load average, and network audit
+│   └── userinfo.sh                           # Local account audit, home directories, UID/GID, and lastlog
 ├── network/
-│   └── tor-proxy-manager.sh                  # Gerenciador CLI de proxy SOCKS5 (Tor local)
+│   └── tor-proxy-manager.sh                  # CLI manager for local SOCKS5 proxy (Tor network)
 ├── security-hardening/
-│   ├── config.example.env                    # Template seguro para credenciais de API e alertas
-│   ├── setup-hids.sh                         # Instalador e inicializador automatizado da suíte HIDS
-│   ├── ssh-hardening-check.sh                # Auditor de conformidade e hardening para OpenSSH (sshd_config)
-│   ├── nginx-hardening.conf                  # Snippet de cabeçalhos e diretivas defensivas para Nginx
-│   ├── cloudflare-waf-rules.json             # Regras customizadas exportadas do Cloudflare WAF
-│   ├── update-abuseipdb-cloudflare.py        # Sincronizador diário de reputação AbuseIPDB -> Cloudflare WAF Lists
-│   ├── f2b-nginx-cloudflare-block.py         # Bloqueio em camada dupla (Nginx RealIP map + Cloudflare Edge WAF)
-│   ├── f2b-telegram-notify.py                # Alertas forenses via Telegram com análise de probes e força bruta SSH
+│   ├── config.example.env                    # Secure template for API credentials and alerts
+│   ├── setup-hids.sh                         # Automated installer and baseline initializer for HIDS suite
+│   ├── ssh-hardening-check.sh                # OpenSSH server compliance & hardening auditor (sshd_config)
+│   ├── nginx-hardening.conf                  # Production-grade defensive security headers & directives
+│   ├── cloudflare-waf-rules.json             # Custom edge security rules exported from Cloudflare WAF
+│   ├── update-abuseipdb-cloudflare.py        # Daily sync: AbuseIPDB reputation -> Cloudflare WAF Lists
+│   ├── f2b-nginx-cloudflare-block.py         # Dual-layer response (Nginx RealIP map + Cloudflare Edge WAF)
+│   ├── f2b-telegram-notify.py                # Forensic Telegram alerts with probe inspection & brute-force data
 │   └── hids/
-│       ├── chat-telegram.sh                  # Script universal de alertas via Telegram Bot API
-│       ├── monitorar-portas.sh               # Monitoramento com diff de portas abertas (críticas vs essenciais)
-│       ├── monitorar-pacotes.sh              # Auditoria de pacotes instalados/removidos via dpkg
-│       ├── arquivos-criticos-fim.sh          # File Integrity Monitoring (FIM) com hashes SHA-256 e exclusões
-│       └── monitorar-bits-especiais.sh       # Detecção de novos binários com bits especiais SUID/SGID
+│       ├── chat-telegram.sh                  # Universal alerting script via Telegram Bot API
+│       ├── monitorar-portas.sh               # Continuous listening ports audit with diff analysis (ss)
+│       ├── monitorar-pacotes.sh              # Package management audit via dpkg
+│       ├── arquivos-criticos-fim.sh          # File Integrity Monitoring (FIM) with SHA-256 hashes
+│       └── monitorar-bits-especiais.sh       # SUID/SGID special bits privilege escalation tracker
 ├── systemd/
-│   ├── backup-hetzner.service                # Unit systemd para rotina de backup
-│   ├── backup-hetzner.timer                  # Agendamento diário do backup (03:00)
-│   ├── abuseipdb-sync.service                # Unit systemd para sincronização com Cloudflare WAF
-│   ├── abuseipdb-sync.timer                  # Agendamento diário de reputação (04:00)
-│   └── rclone-mount.service                  # Unit para montagem de storage remoto via FUSE
-├── LICENSE                                   # Licença MIT
-├── README.md                                 # Documentação técnica em português
-└── README.en.md                              # Documentação técnica em inglês
+│   ├── backup-hetzner.service                # Systemd unit for GFS backup routine
+│   ├── backup-hetzner.timer                  # Daily backup timer (03:00)
+│   ├── abuseipdb-sync.service                # Systemd unit for Cloudflare WAF synchronization
+│   ├── abuseipdb-sync.timer                  # Daily reputation sync timer (04:00)
+│   └── rclone-mount.service                  # Systemd unit for remote cloud storage mount with VFS cache
+├── LICENSE                                   # MIT License
+├── README.md                                 # Documentation in Portuguese
+├── README.md                                 # Technical documentation in English
+└── README.pt-br.md                           # Documentação técnica em português
 ```
 
 ---
 
-## Ferramentas e Guias de Uso
+## Tools and Usage Guides
 
-### 1. Backup & Recuperação de Desastres (`backup/`)
+### 1. Backup & Disaster Recovery (`backup/`)
 
 #### `backup-hetzner-gfs.sh`
-Rotina de backup automatizada com verificação criptográfica de integridade por **hash SHA-256** e política de retenção **GFS (Grandfather-Father-Son)**:
-* **Integridade Criptográfica**: Gera hash SHA-256 local antes do envio e valida diretamente contra a cópia remota no Rclone antes de expurgar arquivos temporários locais.
-* **Política GFS**:
-  * **Diário (Son)**: Mantido por 7 dias.
-  * **Semanal (Father)**: Promovido aos domingos, retido por 30 dias.
-  * **Mensal (Grandfather)**: Promovido no dia 01, retido por 180 dias.
-  * **Anual**: Promovido no dia 01 de janeiro, retido por 2 anos.
+Automated backup routine featuring **SHA-256 cryptographic verification** and **Grandfather-Father-Son (GFS)** retention policies:
+* **Cryptographic Integrity**: Generates a local SHA-256 hash before transmission and validates it directly against the remote Rclone replica before purging local temporary files.
+* **GFS Retention Policy**:
+  * **Daily (Son)**: Retained for 7 days.
+  * **Weekly (Father)**: Promoted on Sundays, retained for 30 days.
+  * **Monthly (Grandfather)**: Promoted on the 1st day of the month, retained for 180 days.
+  * **Yearly**: Promoted on January 1st, retained for 2 years.
 
 ```bash
 chmod +x backup/backup-hetzner-gfs.sh
@@ -84,163 +85,162 @@ chmod +x backup/backup-hetzner-gfs.sh
 ```
 
 #### `backup-mysql.sh`
-Dump consistente de bancos MySQL/MariaDB sem credenciais expostas no código:
-* Autenticação segura via `~/.my.cnf` (permissão `0600`) ou variáveis de ambiente (`MYSQL_USER`, `MYSQL_PWD`, `MYSQL_HOST`).
-* Compactação `gzip -9` em pipeline sem overhead de arquivos temporários descompactados em disco.
-* Rotação e expurgo automático de dumps locais com mais de *N* dias.
+Consistent MySQL/MariaDB database dump without code-exposed credentials:
+* Secure authentication via `~/.my.cnf` (`0600` permissions) or environment variables (`MYSQL_USER`, `MYSQL_PWD`, `MYSQL_HOST`).
+* High-compression `gzip -9` stream pipeline with zero temporary uncompressed disk footprint.
+* Automated local dump rotation and cleanup for archives older than *N* days.
 
 #### `backup-postgres.sh`
-Dump consistente de bancos PostgreSQL ou cluster completo (`pg_dumpall`) sem credenciais expostas no código:
-* Autenticação segura via `~/.pgpass` (permissão `0600`) ou variáveis de ambiente (`PGDATABASE`, `PGUSER`, `PGHOST`, `PGPORT`).
-* Pipeline de compactação `gzip -9` em tempo real, sem overhead de arquivos intermediários descompactados.
-* Limpeza e expurgo automático de dumps locais com mais de *N* dias.
+Consistent PostgreSQL database or full cluster dump (`pg_dumpall`) without code-exposed credentials:
+* Secure authentication via `~/.pgpass` (`0600` permissions) or environment variables (`PGDATABASE`, `PGUSER`, `PGHOST`, `PGPORT`).
+* Real-time `gzip -9` compression pipeline with zero uncompressed temporary disk overhead.
+* Automated local dump rotation and cleanup for archives older than *N* days.
 
 ```bash
-# Backup de base específica:
-PGDATABASE="minhadatabase" ./backup/backup-postgres.sh
+# Specific database backup:
+PGDATABASE="mydatabase" ./backup/backup-postgres.sh
 
-# Backup completo do cluster (pg_dumpall):
+# Full cluster backup (pg_dumpall):
 ./backup/backup-postgres.sh
 ```
 
 ---
 
-### 2. Gerenciamento e Diagnóstico de Sistema (`system/`)
+### 2. System Management & Diagnostics (`system/`)
 
 #### `create-swap.sh`
-Criação automatizada de Swap File no Linux:
-* Aloca com `fallocate` de alta performance ou fallback automático para `dd`.
-* Aplica permissões restritas `0600` e formata com `mkswap`.
-* Registra persistentemente em `/etc/fstab` com prevenção contra entradas duplicadas.
+Automated swap file creation and persistence:
+* Allocates with high-performance `fallocate` or automatic fallback to `dd`.
+* Enforces strict `0600` permissions and formats via `mkswap`.
+* Persistently registers inside `/etc/fstab` with duplicate entry prevention.
 
 ```bash
 sudo ./system/create-swap.sh 4G /swapfile
 ```
 
 #### `docker-cleanup.sh`
-Manutenção e liberação periódica de espaço em disco no Docker:
-* Expura containers parados, redes órfãs e imagens sem uso (*dangling*).
-* Limpa cache de compilação (*BuildKit cache*).
-* Trunca logs excessivos de containers (`*-json.log`) sem derrubar os serviços ativos.
+Routine Docker hygiene and disk space reclamation:
+* Prunes stopped containers, dangling images, and orphan networks.
+* Cleans BuildKit build cache.
+* Truncates oversized container JSON log files (`*-json.log`) without stopping active services.
 
 ```bash
-# Execução padrão (limpeza com truncamento de logs > 50MB):
+# Standard execution (cleanup with log truncation > 50MB):
 sudo ./system/docker-cleanup.sh
 
-# Apenas verificar espaço recuperável sem alterar nada:
+# Dry-run inspection without applying changes:
 ./system/docker-cleanup.sh --dry-run
 ```
 
 #### `sysinfo.sh`
-Relatório instantâneo de diagnóstico do servidor: Kernel, arquitetura, Uptime, Load Average, Cores da CPU, consumo consolidado de RAM/Swap, particionamento e interfaces de rede.
+Instant server diagnostic report: Kernel, architecture, Uptime, Load Average, CPU Cores, RAM/Swap metrics, filesystem partitions, and active network interfaces.
 
 #### `userinfo.sh`
-Audita contas locais no sistema para conformidade de privilégios (UID, GID, grupos, espaço em uso na home e último login via `lastlog`).
+Local account security audit: UID, GID, groups, home directory usage, and last login via `lastlog`.
 
 ---
 
-### 3. Rede e Anonimização (`network/`)
+### 3. Networking & Anonymization (`network/`)
 
 #### `tor-proxy-manager.sh`
-Ativação e verificação de conectividade via rede Tor através do túnel SOCKS5 local (`127.0.0.1:9050`):
+Activation and status check for Tor SOCKS5 proxy tunnel (`127.0.0.1:9050`):
 ```bash
-# Testar conectividade:
+# Test connectivity:
 ./network/tor-proxy-manager.sh status
 
-# Exportar variáveis para a sessão atual do shell:
+# Export proxy environment variables to the active shell:
 source ./network/tor-proxy-manager.sh on
 ```
 
 ---
 
-### 4. Segurança, Hardening & HIDS (`security-hardening/`)
+### 4. Security Hardening & HIDS (`security-hardening/`)
 
-Módulo avançado de proteção perimetral, integração de WAF na borda e detecção de intrusão local:
+Advanced perimeter protection, edge WAF orchestration, and host-based intrusion detection:
 
 #### `update-abuseipdb-cloudflare.py`
-Sincroniza automaticamente a blacklist de reputação global do **AbuseIPDB** com as listas de regras customizadas do **Cloudflare WAF (IP Lists)**:
-* Baixa até 10.000 IPs maliciosos com pontuação de abuso $\ge 90\%$.
-* Tratamento automático de rate limits (HTTP 429) com parsing do cabeçalho `X-RateLimit-Reset`.
-* Upload em lote via API v4 do Cloudflare com monitoramento da operação assíncrona.
+Synchronizes the **AbuseIPDB** global threat intelligence blacklist directly into **Cloudflare WAF IP Lists**:
+* Downloads up to 10,000 malicious IPs with abuse confidence score $\ge 90\%$.
+* Handles rate limits automatically (HTTP 429) using `X-RateLimit-Reset` header parsing.
+* Batched upload via Cloudflare API v4 with async operation monitoring.
 
 #### `f2b-nginx-cloudflare-block.py`
-Integração de resposta ativa do Fail2ban com bloqueio em camada dupla:
-1. **Camada de Borda (Cloudflare WAF)**: Cria regra de bloqueio direto na API do Cloudflare, impedindo que o tráfego malicioso consuma largura de banda do VPS.
-2. **Camada Local (Nginx RealIP)**: Mantém um mapa em memória (`blocked.map`) alimentado pelo Fail2ban para descartar conexões instantaneamente com HTTP 444.
+Active intrusion response integrating Fail2ban with dual-layer mitigation:
+1. **Edge Layer (Cloudflare WAF)**: Creates instantaneous edge block rules, preventing malicious traffic from reaching the VPS.
+2. **Local Layer (Nginx RealIP)**: Populates an in-memory map (`blocked.map`) to drop abusive requests immediately with HTTP 444.
 
 #### `f2b-telegram-notify.py`
-Notificador de incidentes de segurança com extração forense:
-* Analisa logs do Nginx para extrair os exatos payloads/rotas sensíveis sondadas (`.env`, `.git`, AWS, ModSecurity 403).
-* Analisa o journal do `sshd` para listar quais nomes de usuários foram tentados no ataque de força bruta.
-* Emite alertas imediatos no Telegram com nível de severidade e tempo de banimento.
+Incident alert dispatcher with automated forensic extraction:
+* Analyzes Nginx logs to pinpoint targeted routes (`.env`, `.git`, AWS credentials, ModSecurity 403).
+* Inspects `sshd` journal logs to extract attempted usernames in brute-force attacks.
+* Dispatches real-time Telegram alerts with severity ratings and ban durations.
 
-#### Regras de Borda do Cloudflare WAF (`cloudflare-waf-rules.json`)
-Definições exportadas das regras personalizadas de proteção em borda (Cloudflare WAF Custom Rules):
-1. **`Block by IP Lists: malicious_ips`**: Bloqueio ativo alimentado dinamicamente pelo script `update-abuseipdb-cloudflare.py`.
-2. **`Bots e Crawlers de Ferramentas de Pentest / Scanner`**: Bloqueio de User-Agents maliciosos (Nikto, Nmap, SQLmap, Acunetix, WPScan, Dirbuster, Scrapy, etc.).
-3. **`Acesso a Arquivos e Diretórios Críticos`**: Bloqueio perimetral de requisições a `.env`, `.git`, `.yaml`, `.sql`, backups (`.bak`, `.tar.gz`), `/actuator`, `phpmyadmin` e painéis administrativos.
-4. **`Transversal Path | XSS | SQLi | Wrappers SSRF | Command Injection`**: Interceptação em camada de borda contra Path Traversal (`../`, URL encoded `%2e%2e%2f`), SQL Injection (`union select`, `sleep()`), XSS (`<script>`), PHP stream wrappers (`php://`, `gopher://`) e Command Injection (`;id`, `;cat`, `;bash`).
-
+#### Cloudflare WAF Edge Rules (`cloudflare-waf-rules.json`)
+Exported production rules for Cloudflare WAF:
+1. **`Block by IP Lists: malicious_ips`**: Edge blocking populated by `update-abuseipdb-cloudflare.py`.
+2. **`Pentest & Scanner User-Agents`**: Intercepts scanners (Nikto, Nmap, SQLmap, Acunetix, WPScan, Dirbuster, Scrapy, etc.).
+3. **`Critical File & Directory Protection`**: Blocks requests targeting `.env`, `.git`, `.yaml`, `.sql`, backups (`.bak`, `.tar.gz`), `/actuator`, `phpmyadmin`, and administrative interfaces.
+4. **`Path Traversal | XSS | SQLi | SSRF | Command Injection`**: Intercepts path traversal (`../`, `%2e%2e%2f`), SQL Injection (`union select`, `sleep()`), XSS (`<script>`), PHP stream wrappers (`php://`), and command injection (`;id`, `;cat`).
 
 #### `nginx-hardening.conf`
-Snippet modular para inclusão em servidores Nginx de produção:
-* Ativação de cabeçalhos de segurança: HSTS (`max-age=31536000`), X-Frame-Options, X-Content-Type-Options e Permissions-Policy.
-* Ocultação de versão do Nginx (`server_tokens off`).
-* Bloqueio silencioso (HTTP 444) contra download de arquivos ocultos (`.env`, `.git`) e backups (`.sql`, `.bak`, `.tar.gz`).
-* Buffers dimensionados para mitigação de ataques de exaustão e Slowloris.
+Modular Nginx snippet for production environments:
+* Modern security headers: HSTS (`max-age=31536000`), X-Frame-Options, X-Content-Type-Options, and Permissions-Policy.
+* Server token obfuscation (`server_tokens off`).
+* Silent drops (HTTP 444) for dotfiles and backup archives.
+* Hardened buffers against slow-rate resource exhaustion attacks (Slowloris).
 
 #### `setup-hids.sh`
-Instalador interativo da suíte HIDS:
-* Cria estrutura de diretórios e arquivos de configuração.
-* Gera baselines criptográficos iniciais do host em `/home/$USER/.hids/logs/`.
-* Exibe instruções prontas para agendamento no `cron` ou `systemd`.
+Interactive HIDS suite installer:
+* Creates directory hierarchies and configuration skeletons.
+* Generates initial cryptographic host baselines in `/home/$USER/.hids/logs/`.
+* Displays ready-to-use cron and systemd schedules.
 
 ```bash
 ./security-hardening/setup-hids.sh
 ```
 
 #### `ssh-hardening-check.sh`
-Auditor defensivo de conformidade e hardening para o servidor **OpenSSH** (`sshd_config`), baseado em recomendações do CIS Benchmarks e NIST SP 800-128:
-* **Inspeção Inteligente**: Opera via engine nativa do OpenSSH (`sshd -T`) quando executado com privilégios adequados ou via parsing recursivo de arquivos e diretivas `Include` (`sshd_config.d/*.conf`).
-* **Diretivas Auditadas**:
-  * Autenticação de Root (`PermitRootLogin no`)
-  * Autenticação por Chaves vs Senhas (`PasswordAuthentication no`, `PubkeyAuthentication yes`)
-  * Rejeição de Senhas Vazias (`PermitEmptyPasswords no`)
-  * Limite de Tentativas contra Força Bruta (`MaxAuthTries 3`)
-  * Desativação de Repasse Gráfico e Sockets (`X11Forwarding no`, `AllowAgentForwarding no`)
-  * Prevenção de Sessões Zumbis por Inatividade (`ClientAliveInterval`, `ClientAliveCountMax`)
-  * Bloqueio de Métodos Legados (`HostbasedAuthentication no`, `IgnoreRhosts yes`)
-  * Verificação de Cifras e Algoritmos Obsoletos (3DES, Arcfour, Blowfish, MD5, DH-Group1)
-* **Diagnóstico e Relatório**:
-  * Atribuição de pontuação técnica (0 a 100) e nota de conformidade (A+, A, B, C, D, F).
-  * Lista priorizada de ações recomendadas de remediação.
-  * Suporte a teste de arquivos de configuração arbitrários (`-c`) e modo sem cores (`--no-color`).
+Compliance and hardening auditor for **OpenSSH Server** (`sshd_config`), based on CIS Benchmarks and NIST SP 800-128:
+* **Dual Inspection Engine**: Uses native OpenSSH engine (`sshd -T`) when executed with appropriate privileges or recursive parsing across `Include` directives (`sshd_config.d/*.conf`).
+* **Audited Directives**:
+  * Root Login Policy (`PermitRootLogin no`)
+  * Key vs Password Authentication (`PasswordAuthentication no`, `PubkeyAuthentication yes`)
+  * Empty Password Rejection (`PermitEmptyPasswords no`)
+  * Brute-Force Rate Limiting (`MaxAuthTries 3`)
+  * Forwarding Restrictions (`X11Forwarding no`, `AllowAgentForwarding no`)
+  * Idle Session Timeout (`ClientAliveInterval`, `ClientAliveCountMax`)
+  * Legacy Protocol Blocking (`HostbasedAuthentication no`, `IgnoreRhosts yes`)
+  * Obsolete Cryptographic Suite Detection (3DES, Arcfour, Blowfish, MD5, DH-Group1)
+* **Diagnostics & Reporting**:
+  * Technical score (0 to 100) and letter grade (A+, A, B, C, D, F).
+  * Prioritized remediation checklist.
+  * Supports arbitrary configuration files (`-c`) and no-color mode (`--no-color`).
 
 ```bash
-# Executar auditoria na configuração padrão do sistema:
+# Audit active system configuration:
 ./security-hardening/ssh-hardening-check.sh
 
-# Auditar arquivo de configuração customizado ou backup:
+# Audit custom configuration file or backup:
 ./security-hardening/ssh-hardening-check.sh -c /etc/ssh/sshd_config
 ```
 
 #### HIDS (Host-Based Intrusion Detection System - `security-hardening/hids/`)
-* **`monitorar-portas.sh`**: Monitoramento contínuo das portas em escuta (`ss -tunlp`). Emite alerta imediato caso portas críticas (21, 23, 25, 8080) sejam abertas ou portas vitais (22, 443) fiquem indisponíveis.
-* **`monitorar-pacotes.sh`**: Auditoria do gerenciador de pacotes (`dpkg`), alertando sobre instalação ou remoção inadvertida de softwares e binários.
-* **`arquivos-criticos-fim.sh`**: **File Integrity Monitoring (FIM)** baseado em checksums SHA-256 de diretórios sensíveis (`/etc/nginx`, `/etc/ssh`, etc.), detectando injeção de web shells, backdoors ou adulterações de configuração.
-* **`monitorar-bits-especiais.sh`**: Rastreia binários com permissões especiais `SUID` (4000) e `SGID` (2000), identificando potenciais vetores de escalada de privilégios.
+* **`monitorar-portas.sh`**: Continuous monitoring of listening ports (`ss -tunlp`). Alerts on suspicious open ports (21, 23, 25, 8080) or essential port downtime (22, 443).
+* **`monitorar-pacotes.sh`**: Package manager audit (`dpkg`), tracking additions and removals.
+* **`arquivos-criticos-fim.sh`**: **File Integrity Monitoring (FIM)** based on SHA-256 hashes of sensitive paths (`/etc/nginx`, `/etc/ssh`), detecting webshell injection or backdoor modifications.
+* **`monitorar-bits-especiais.sh`**: Privilege escalation tracker monitoring `SUID` (4000) and `SGID` (2000) binaries.
 
 ---
 
-### 5. Automação via Systemd (`systemd/`)
+### 5. Automation via Systemd (`systemd/`)
 
-Arquivos de unidade prontos para produção:
-* **`backup-hetzner.service` / `.timer`**: Executa a rotina GFS diariamente às 03:00.
-* **`abuseipdb-sync.service` / `.timer`**: Atualiza a lista do Cloudflare WAF diariamente às 04:00.
-* **`rclone-mount.service`**: Montagem persistente de volumes em nuvem com cache VFS.
+Production-ready unit files:
+* **`backup-hetzner.service` / `.timer`**: Runs GFS routine daily at 03:00.
+* **`abuseipdb-sync.service` / `.timer`**: Updates Cloudflare WAF list daily at 04:00.
+* **`rclone-mount.service`**: Persistent cloud storage mount with VFS cache.
 
 ```bash
-# Exemplo de ativação de timer:
+# Example timer activation:
 sudo cp systemd/abuseipdb-sync.* /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now abuseipdb-sync.timer
@@ -248,17 +248,17 @@ sudo systemctl enable --now abuseipdb-sync.timer
 
 ---
 
-## Segurança e Boas Práticas
+## Security & Best Practices
 
-* **Zero Hardcoded Secrets**: Nenhuma credencial, token do Telegram ou chave de API reside no código. Todas as configurações utilizam variáveis de ambiente ou arquivos `config.env` protegidos com permissão `0600`.
-* **POSIX / Bash Safe Mode**: Todos os scripts utilizam `set -euo pipefail` para interrupção imediata em caso de falha em pipes ou variáveis não declaradas.
-* **Defesa em Profundidade**: Proteção combinando borda (Cloudflare), WAF aplicacional (ModSecurity / Nginx) e monitoramento de integridade do host (HIDS).
+* **Zero Hardcoded Secrets**: No credentials, Telegram tokens, or API keys reside in code. All configuration uses environment variables or `config.env` files secured with `0600` permissions.
+* **POSIX / Bash Safe Mode**: All shell scripts execute with `set -euo pipefail` to ensure immediate termination on errors, uninitialized variables, or pipe failures.
+* **Defense in Depth**: Multi-tier architecture combining edge protection (Cloudflare), web application firewall (Nginx / ModSecurity), and host integrity monitoring (HIDS).
 
 ---
 
-## Autor
+## Author
 
 **Rafael Soje**
-* **Website Oficial**: [rafaelsoje.com](https://rafaelsoje.com)
+* **Official Website**: [rafaelsoje.com](https://rafaelsoje.com)
 * **GitHub**: [@rafaelsoje](https://github.com/rafaelsoje)
-* **Especialidade**: Linux System Administration, DevSecOps, Segurança da Informação e Arquitetura Web.
+* **Specialization**: Linux Systems Administration, DevSecOps, Information Security & Web Architecture.
