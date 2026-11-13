@@ -331,15 +331,20 @@ fi
 # 9. AllowAgentForwarding & AllowTcpForwarding (Peso: 5)
 AGENT_FWD=$(get_directive "AllowAgentForwarding" "yes")
 TCP_FWD=$(get_directive "AllowTcpForwarding" "yes")
-if [[ "${AGENT_FWD,,}" == "no" ]]; then
+if [[ "${AGENT_FWD,,}" == "no" && "${TCP_FWD,,}" == "no" ]]; then
     TOTAL_SCORE=$((TOTAL_SCORE + 5))
     PASS_COUNT=$((PASS_COUNT + 1))
-    print_result "PASS" "AllowAgentForwarding" "Desativado ('no'). Protege sockets ssh-agent locais contra hosts remotos comprometidos."
-else
-    TOTAL_SCORE=$((TOTAL_SCORE + 2))
+    print_result "PASS" "Forwarding (Agent & TCP)" "Desativados ('no'). Protege sockets ssh-agent locais e bloqueia túneis TCP arbitrários."
+elif [[ "${AGENT_FWD,,}" == "no" ]]; then
+    TOTAL_SCORE=$((TOTAL_SCORE + 3))
     WARN_COUNT=$((WARN_COUNT + 1))
-    print_result "WARN" "AllowAgentForwarding" "Ativado ('yes'). Recomendado desativar ('no') se não for estritamente indispensável."
-    RECOMMENDATIONS+=("Desative o repasse de agent se desnecessário: 'AllowAgentForwarding no'.")
+    print_result "WARN" "Forwarding (Agent & TCP)" "Agent desativado ('no'), mas AllowTcpForwarding ativo ('${TCP_FWD}'). Recomendado desativar se não for indispensável."
+    RECOMMENDATIONS+=("Desative repasse TCP se desnecessário: 'AllowTcpForwarding no'.")
+else
+    TOTAL_SCORE=$((TOTAL_SCORE + 1))
+    WARN_COUNT=$((WARN_COUNT + 1))
+    print_result "WARN" "Forwarding (Agent & TCP)" "AllowAgentForwarding (${AGENT_FWD}) e AllowTcpForwarding (${TCP_FWD}) ativados. Recomendado desativar se desnecessários."
+    RECOMMENDATIONS+=("Desative repasse de agent e túneis TCP se desnecessário: 'AllowAgentForwarding no' e 'AllowTcpForwarding no'.")
 fi
 
 # 10. Porta e Exposição (Peso: 5)

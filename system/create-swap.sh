@@ -36,7 +36,7 @@ echo "[+] Alocando espaço com fallocate..."
 if ! fallocate -l "${SWAP_SIZE}" "${SWAP_FILE}" 2>/dev/null; then
     echo "[AVISO] fallocate falhou ou não é suportado pelo filesystem. Usando 'dd' como fallback..."
     # Converte 2G ou 4G para megabytes para o dd
-    SIZE_NUM=$(echo "${SWAP_SIZE}" | sed 's/[^0-9]//g')
+    SIZE_NUM="${SWAP_SIZE//[^0-9]/}"
     SIZE_UNIT=$(echo "${SWAP_SIZE}" | sed 's/[0-9]//g' | tr '[:lower:]' '[:upper:]')
     
     if [[ "${SIZE_UNIT}" == "G" ]]; then

@@ -8,7 +8,7 @@ on:
 
 jobs:
   validate:
-    name: Validação de Sintaxe (Bash & Python)
+    name: Validação de Sintaxe e Análise Estática (Bash & Python)
     runs-on: ubuntu-latest
 
     steps:
@@ -26,9 +26,14 @@ jobs:
           bash -n backup/*.sh system/*.sh network/*.sh security-hardening/*.sh security-hardening/hids/*.sh
           echo "[✔] Todos os scripts Bash passaram na validação de sintaxe."
 
+      - name: Análise Estática com ShellCheck
+        run: |
+          echo "[+] Executando ShellCheck em todos os scripts Bash..."
+          shellcheck backup/*.sh system/*.sh network/*.sh security-hardening/*.sh security-hardening/hids/*.sh
+          echo "[✔] Todos os scripts Shell foram aprovados no ShellCheck com zero avisos."
+
       - name: Validar Sintaxe dos Scripts Python
         run: |
           echo "[+] Validando scripts Python com 'py_compile'..."
           python3 -m py_compile security-hardening/*.py
           echo "[✔] Todos os scripts Python compilaram sem erros de sintaxe."
-

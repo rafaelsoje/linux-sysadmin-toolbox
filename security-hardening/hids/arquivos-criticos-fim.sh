@@ -59,7 +59,6 @@ if [[ -f "${HASH_ANTIGO}" ]]; then
         # Analisa linhas adicionadas (+) e removidas (-)
         while IFS= read -r line; do
             if [[ "${line}" =~ ^\+([a-f0-9]{64})[[:space:]]+(.*)$ ]]; then
-                hash_n="${BASH_REMATCH[1]}"
                 file_n="${BASH_REMATCH[2]}"
                 # Verifica se o arquivo já existia com outro hash (alterado) ou se é novo
                 if grep -qs "[[:space:]]${file_n}\$" "${HASH_ANTIGO}"; then
